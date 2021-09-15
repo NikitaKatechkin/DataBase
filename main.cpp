@@ -33,9 +33,11 @@ int main()
     tools::addField({"age", false, tools::FieldType::FIELD_TYPE_INT}, "file.txt");
     tools::addField({"sex", false, tools::FieldType::FIELD_TYPE_BOOLEAN}, "file.txt");*/
 
-    bool answer;
+    /*bool answer;
     tools::input("Input num", &answer);
-    std::cout << answer << std::endl;
+    std::cout << answer << std::endl;*/
+
+    DataBase DB;
 
     return 0;
 }
