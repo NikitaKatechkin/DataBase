@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1631743434 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
+	"tools.h"
+
+1631743257 source:c:\projects\cpp\hse\data_management_lab1\tools.cpp
+	<iostream>
+	<fstream>
+
+1631743178 c:\projects\cpp\hse\data_management_lab1\tools.cpp
+	<iostream>
+	<fstream>
+
+1631743383 c:\projects\cpp\hse\data_management_lab1\tools.h
+	<iostream>
+	<fstream>
+
