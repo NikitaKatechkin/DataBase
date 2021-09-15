@@ -1,46 +1,6 @@
-#include "DataBase.h"
-//#include "tools.h"
-/*enum FieldType
-{
-    FIELD_TYPE_INT = 0,
-    FIELD_TYPE_FLOAT,
-    FIELD_TYPE_STRING,
-    FIELD_TYPE_BOOLEAN
-};
+#include "tools.h"
 
-struct Field
-{
-    std::string m_name;
-    bool m_key_field;
-    FieldType m_type;
-};
-
-bool createDBfile(std::string l_DB_name);
-bool addField(Field l_field, std::string l_DB_file_path);
-
-bool goToLine(int l_line_number, std::ifstream& l_file);
-bool changeLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end = ";");
-bool insertLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end = ";");
-bool addToLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end = ";");*/
-
-int main()
-{
-    //tools::createDBfile("file.txt");
-    //changeLine(0, "file.txt", "it's nice");
-    //insertLine(0, "file.txt", "inserted string");
-    //addToLine(0, "file.txt", "additional string");
-    /*tools::addField({"name", true, tools::FieldType::FIELD_TYPE_STRING}, "file.txt");
-    tools::addField({"age", false, tools::FieldType::FIELD_TYPE_INT}, "file.txt");
-    tools::addField({"sex", false, tools::FieldType::FIELD_TYPE_BOOLEAN}, "file.txt");*/
-
-    bool answer;
-    tools::input("Input num", &answer);
-    std::cout << answer << std::endl;
-
-    return 0;
-}
-
-/*bool createDBfile(std::string l_DB_name)
+bool tools::createDBfile(std::string l_DB_name)
 {
     std::cout << "createDBfile(): " << std::endl;
 
@@ -69,19 +29,7 @@ int main()
     return false;
 }
 
-bool addField(Field l_field, std::string l_DB_file_path)
-{
-    std::cout << "createDBfile(): " << std::endl;
-
-    addToLine(0, l_DB_file_path, l_field.m_name);
-    addToLine(1, l_DB_file_path, std::to_string(int(l_field.m_key_field)));
-    addToLine(2, l_DB_file_path, std::to_string(int(l_field.m_type)));
-
-    std::cout << "createDBfile() END_FUNC" << std::endl;
-    return true;
-}
-
-bool goToLine(int l_line_number, std::ifstream& l_file)
+bool tools::goToLine(int l_line_number, std::ifstream& l_file)
 {
     std::cout << "goToLine(): " << std::endl;
 
@@ -107,7 +55,7 @@ bool goToLine(int l_line_number, std::ifstream& l_file)
     return success_flag;
 }
 
-bool changeLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
+bool tools::changeLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
 {
     std::cout << "changeLine(): " << std::endl;
 
@@ -152,7 +100,7 @@ bool changeLine(int l_line_number, std::string l_DB_file_path, std::string l_new
     return true;
 }
 
-bool insertLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
+bool tools::insertLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
 {
     std::cout << "insertLine(): " << std::endl;
 
@@ -196,7 +144,7 @@ bool insertLine(int l_line_number, std::string l_DB_file_path, std::string l_new
     return true;
 }
 
-bool addToLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
+bool tools::addToLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end)
 {
     std::cout << "addToLine(): " << std::endl;
 
@@ -240,4 +188,16 @@ bool addToLine(int l_line_number, std::string l_DB_file_path, std::string l_new_
     std::cout << "Success" << std::endl;
     std::cout << "addToLine() END_FUNC" << std::endl;
     return true;
-}*/
+}
+
+bool tools::addField(tools::Field l_field, std::string l_DB_file_path)
+{
+    std::cout << "createDBfile(): " << std::endl;
+
+    addToLine(0, l_DB_file_path, l_field.m_name);
+    addToLine(1, l_DB_file_path, std::to_string(int(l_field.m_key_field)));
+    addToLine(2, l_DB_file_path, std::to_string(int(l_field.m_type)));
+
+    std::cout << "createDBfile() END_FUNC" << std::endl;
+    return true;
+}

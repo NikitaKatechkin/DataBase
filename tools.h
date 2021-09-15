@@ -28,7 +28,14 @@ namespace tools{
     bool insertLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end = ";");
     bool addToLine(int l_line_number, std::string l_DB_file_path, std::string l_new_line, std::string l_end = ";");
 
-    bool createDBfile(std::string l_DB_name)
+    template <typename T>
+    void input(std::string l_input_invite, T* l_to_record)
+    {
+        std::cout << l_input_invite << ": ";
+        std::cin >> *l_to_record;
+    }
+
+    /*bool createDBfile(std::string l_DB_name)
     {
         std::cout << "createDBfile(): " << std::endl;
 
@@ -228,7 +235,7 @@ namespace tools{
 
         std::cout << "createDBfile() END_FUNC" << std::endl;
         return true;
-    }
+    }*/
 }
 
 #endif // TOOLS_H_INCLUDED
