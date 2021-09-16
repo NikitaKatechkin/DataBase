@@ -60,7 +60,7 @@ bool tools::changeLine(int l_line_number, std::string l_DB_file_path, std::strin
     std::cout << "changeLine(): " << std::endl;
 
     std::ifstream tmp_read(l_DB_file_path);
-    if(!tmp_read.is_open()) { std::cout << "Can't open file" << std::endl; return false; }
+    if(!tmp_read.is_open()) { std::cout << "Can't open file " << l_DB_file_path << std::endl; return false; }
     if(!goToLine(l_line_number, tmp_read)) { std::cout << "Wrong Line Number" << std::endl; return false; }
 
     int insert_position = tmp_read.tellg();
@@ -201,4 +201,3 @@ bool tools::addField(tools::Field l_field, std::string l_DB_file_path)
     std::cout << "createDBfile() END_FUNC" << std::endl;
     return true;
 }
-

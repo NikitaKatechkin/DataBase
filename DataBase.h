@@ -6,16 +6,27 @@
 #include <vector>
 
 //struct Field{};
+enum ServiceRows
+{
+    SERVICE_ROWS_NAMES = 0,
+    SERVICE_ROWS_KEY_MARKS,
+    SERVICE_ROWS_TYPES
+};
 
-class DataBase
+class DataBaseCreator
 {
 public:
-    DataBase();
-    ~DataBase();
+    void addField();
+
+    void create();
+
+    DataBaseCreator();
+    ~DataBaseCreator();
 private:
     std::string m_name;
 
-    std::vector<tools::Field> m_fields;
+    bool newFieldAddCheck(std::string l_add_condidate);
+    //std::vector<tools::Field> m_fields;
 };
 
 #endif // DATABASE_H_INCLUDED

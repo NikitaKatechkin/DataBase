@@ -1,22 +1,23 @@
 # depslib dependency file v1.0
-1631746855 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
+1631757607 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
 	"DataBase.h"
 
-1631746593 source:c:\projects\cpp\hse\data_management_lab1\tools.cpp
+1631755396 source:c:\projects\cpp\hse\data_management_lab1\tools.cpp
 	"tools.h"
 
 1631743178 c:\projects\cpp\hse\data_management_lab1\tools.cpp
 	<iostream>
 	<fstream>
 
-1631746600 c:\projects\cpp\hse\data_management_lab1\tools.h
+1631755385 c:\projects\cpp\hse\data_management_lab1\tools.h
 	<iostream>
 	<fstream>
+	<string>
 
-1631746825 source:c:\projects\cpp\hse\data_management_lab1\database.cpp
+1631757479 source:c:\projects\cpp\hse\data_management_lab1\database.cpp
 	"DataBase.h"
 
-1631746323 c:\projects\cpp\hse\data_management_lab1\database.h
+1631757349 c:\projects\cpp\hse\data_management_lab1\database.h
 	"tools.h"
 	<iostream>
 	<vector>
