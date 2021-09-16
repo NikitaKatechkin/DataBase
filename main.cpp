@@ -14,7 +14,7 @@ int main()
     tools::input("Input num", &answer);
     std::cout << answer << std::endl;*/
 
-    DataBaseCreator DB;
+    DataBase DB;
     DB.create();
     //DB.addField();
 

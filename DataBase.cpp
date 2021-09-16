@@ -1,7 +1,7 @@
 #include "DataBase.h"
 //#include "tools.h"
 
-void DataBaseCreator::addField()
+void DataBase::addField()
 {
     tools::Field field;
 
@@ -22,7 +22,7 @@ void DataBaseCreator::addField()
     /*tools::changeLine(0, m_name, "hello");*/
 }
 
-void DataBaseCreator::create()
+void DataBase::create()
 {
     bool is_created = false;
     while(!is_created)
@@ -40,7 +40,7 @@ void DataBaseCreator::create()
     }
 }
 
-bool DataBaseCreator::newFieldAddCheck(std::string l_add_condidate)
+bool DataBase::newFieldAddCheck(std::string l_add_condidate)
 {
     std::ifstream tmp_names(m_name);
     tools::goToLine(ServiceRows::SERVICE_ROWS_NAMES, tmp_names);
@@ -50,12 +50,12 @@ bool DataBaseCreator::newFieldAddCheck(std::string l_add_condidate)
     return (names.find(l_add_condidate) == std::string::npos);
 }
 
-DataBaseCreator::DataBaseCreator()
+DataBase::DataBase()
 {
 
 }
 
-DataBaseCreator::~DataBaseCreator()
+DataBase::~DataBase()
 {
 
 }

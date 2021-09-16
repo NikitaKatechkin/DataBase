@@ -13,15 +13,15 @@ enum ServiceRows
     SERVICE_ROWS_TYPES
 };
 
-class DataBaseCreator
+class DataBase
 {
 public:
     void addField();
 
     void create();
 
-    DataBaseCreator();
-    ~DataBaseCreator();
+    DataBase();
+    ~DataBase();
 private:
     std::string m_name;
 
