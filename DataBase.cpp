@@ -14,12 +14,7 @@ void DataBase::addField()
 
     tools::input("Input is field key (1 - key field, 0 - generic field)", &field.m_key_field);
 
-    int type;
-    tools::input("Input field type (0 - int, 1 - float, 2 - string, 3 - boolean)", &type);
-    field.m_type = tools::FieldType(type);
-
     tools::addField(field, m_name);
-    /*tools::changeLine(0, m_name, "hello");*/
 }
 
 void DataBase::create()
@@ -42,12 +37,27 @@ void DataBase::create()
 
 bool DataBase::newFieldAddCheck(std::string l_add_condidate)
 {
+    /*std::ifstream tmp_names(m_name);
+    tools::goToLine(ServiceRows::SERVICE_ROWS_NAMES, tmp_names);
+    std::string names;
+    std::getline(tmp_names, names);
+
+    return (names.find(l_add_condidate) == std::string::npos);*/
+    bool is_valid = false;
+
     std::ifstream tmp_names(m_name);
     tools::goToLine(ServiceRows::SERVICE_ROWS_NAMES, tmp_names);
     std::string names;
     std::getline(tmp_names, names);
 
-    return (names.find(l_add_condidate) == std::string::npos);
+    std::string::size_type start_string_pos = names.find(l_add_condidate);
+    if (start_string_pos != std::string::npos)
+    {
+        std::string::size_type nearest_next_delimeter_pos = names.find("");
+        if ((int(start_string_pos) + int(l_add_condidate.length())) < int(nearest_next_delimeter_pos)) { is_valid = true; }
+    }
+
+    return !is_valid;
 }
 
 DataBase::DataBase()

@@ -196,8 +196,73 @@ bool tools::addField(tools::Field l_field, std::string l_DB_file_path)
 
     addToLine(0, l_DB_file_path, l_field.m_name);
     addToLine(1, l_DB_file_path, std::to_string(int(l_field.m_key_field)));
-    addToLine(2, l_DB_file_path, std::to_string(int(l_field.m_type)));
+    //addToLine(2, l_DB_file_path, std::to_string(int(l_field.m_type)));
 
     std::cout << "createDBfile() END_FUNC" << std::endl;
     return true;
+}
+
+bool tools::removeLine(int l_line_number, std::string l_DB_file_path)
+{
+    std::cout << "removeLine(): " << std::endl;
+
+    std::ifstream tmp_read(l_DB_file_path);
+    if(!tmp_read.is_open()) { std::cout << "Can't open file " << l_DB_file_path << std::endl; return false; }
+    if(!goToLine(l_line_number, tmp_read)) { std::cout << "Wrong Line Number" << std::endl; return false; }
+
+    int insert_position = tmp_read.tellg();
+
+    std::string data;
+    std::getline(tmp_read, data);
+    data = "";
+
+    tmp_read.seekg(0);
+    //std::cout << tmp_read.tellg() << std::endl;
+    while(tmp_read.tellg() != insert_position)
+    {
+        std::string line;
+        std::getline(tmp_read, line);
+        data += (line + "\n");
+    }
+
+    std::string line;
+    std::getline(tmp_read, line);
+
+    while(!tmp_read.eof())
+    {
+        std::getline(tmp_read, line);
+        data += (line + "\n");
+    }
+
+    tmp_read.close();
+
+    std::ofstream tmp_write(l_DB_file_path);
+    tmp_write << data;
+    tmp_write.close();
+
+    std::cout << "Success" << std::endl;
+    std::cout << "removeLine() END_FUNC" << std::endl;
+    return true;
+}
+
+std::vector<int> tools::searchForStr(std::string l_DB_file_path, std::string l_str_to_find)
+{
+    std::cout << "searchForStr(): " << std::endl;
+
+    std::vector<int> result;
+    std::ifstream tmp_read(l_DB_file_path);
+    if(!tmp_read.is_open()) { std::cout << "Can't open file " << l_DB_file_path << std::endl; return result; }
+
+    std::string tmp_line;
+    for(int line_index = 0; line_index != -1; line_index++)
+    {
+        std::getline(tmp_read, tmp_line);
+        if(tmp_line.find(l_str_to_find) != std::string::npos) { result.push_back(line_index); }
+
+        if(tmp_line == "\0") { break; }
+    }
+
+    std::cout << "Success" << std::endl;
+    std::cout << "searchForStr() END_FUNC" << std::endl;
+    return result;
 }

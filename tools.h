@@ -4,21 +4,23 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <cstring>
+#include <vector>
 
 namespace tools{
-    enum FieldType
+    /*enum FieldType
     {
         FIELD_TYPE_INT = 0,
         FIELD_TYPE_FLOAT,
         FIELD_TYPE_STRING,
         FIELD_TYPE_BOOLEAN
-    };
+    };*/
 
     struct Field
     {
         std::string m_name;
         bool m_key_field;
-        FieldType m_type;
+        //FieldType m_type;
     };
 
     bool createDBfile(std::string l_DB_name);
@@ -35,6 +37,9 @@ namespace tools{
         std::cout << l_input_invite << ": ";
         std::cin >> *l_to_record;
     }
+
+    bool removeLine(int l_line_number, std::string l_DB_file_path);
+    std::vector<int> searchForStr(std::string l_DB_file_path, std::string l_str_to_find);
 }
 
 #endif // TOOLS_H_INCLUDED
