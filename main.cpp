@@ -46,5 +46,7 @@ int main()
     //tests::test_closeWriteFile();
     //tests::test_deleteFile();
 
+    //tests::test_saveWriteFile();
+
     return 0;
 }

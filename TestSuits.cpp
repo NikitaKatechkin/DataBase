@@ -87,3 +87,12 @@ void tests::test_closeWriteFile()
     FileHandler::openRewriteFile("test.txt", file_stream);
     FileHandler::closeFile(file_stream);
 }
+
+void tests::test_saveWriteFile()
+{
+    std::ofstream file_stream;
+    FileHandler::openWriteFile("test_file.txt", file_stream);
+    FileHandler::saveFile("test_file.txt", file_stream);
+    file_stream << "\nshit";
+    FileHandler::closeFile(file_stream);
+}

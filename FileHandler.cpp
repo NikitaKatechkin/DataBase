@@ -51,16 +51,16 @@ bool FileHandler::openReadFile(const std::string& file_name, std::ifstream& file
 {
     std::cout << "openReadFile() START_FUNC >>" << std::endl;
 
-    bool FILE_SUCCESSFUL_OPENING_FILE = file_read_stream.is_open();
-    if (!FILE_SUCCESSFUL_OPENING_FILE) { file_read_stream.open(file_name); }
+    bool FILE_SUCCESSFUL_OPENING_FLAG = file_read_stream.is_open();
+    if (!FILE_SUCCESSFUL_OPENING_FLAG) { file_read_stream.open(file_name); }
 
 
-    FILE_SUCCESSFUL_OPENING_FILE = file_read_stream.is_open();
-    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for reading" << std::endl; }
+    FILE_SUCCESSFUL_OPENING_FLAG = file_read_stream.is_open();
+    if(!FILE_SUCCESSFUL_OPENING_FLAG) { std::cout << "Error opening file " << file_name << " for reading" << std::endl; }
     else { std::cout << "File " << file_name << " was opened for reading" << std::endl; }
 
     std::cout << "<< openReadFile() END_FUNC" << std::endl;
-    return FILE_SUCCESSFUL_OPENING_FILE;
+    return FILE_SUCCESSFUL_OPENING_FLAG;
 }
 
 bool FileHandler::openRewriteFile(const std::string& file_name, std::ofstream& file_write_stream)
@@ -68,20 +68,20 @@ bool FileHandler::openRewriteFile(const std::string& file_name, std::ofstream& f
     std::cout << "openRewriteFile() START_FUNC >>" << std::endl;
 
     std::ifstream test;
-    bool FILE_SUCCESSFUL_OPENING_FILE = FileHandler::openReadFile(file_name, test);
+    bool FILE_SUCCESSFUL_OPENING_FLAG = FileHandler::openReadFile(file_name, test);
     test.close();
 
-    if(FILE_SUCCESSFUL_OPENING_FILE)
+    if(FILE_SUCCESSFUL_OPENING_FLAG)
     {
         file_write_stream.open(file_name);
-        FILE_SUCCESSFUL_OPENING_FILE = file_write_stream.is_open();
+        FILE_SUCCESSFUL_OPENING_FLAG = file_write_stream.is_open();
     }
 
-    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for rewriting" << std::endl; }
+    if(!FILE_SUCCESSFUL_OPENING_FLAG) { std::cout << "Error opening file " << file_name << " for rewriting" << std::endl; }
     else { std::cout << "File " << file_name << " was opened for rewriting" << std::endl; }
 
     std::cout << "<< openRewriteFile() END_FUNC" << std::endl;
-    return FILE_SUCCESSFUL_OPENING_FILE;
+    return FILE_SUCCESSFUL_OPENING_FLAG;
 }
 
 bool FileHandler::openWriteFile(const std::string& file_name, std::ofstream& file_write_stream)
@@ -89,42 +89,66 @@ bool FileHandler::openWriteFile(const std::string& file_name, std::ofstream& fil
     std::cout << "openWriteFile() START_FUNC >>" << std::endl;
 
     std::ifstream test;
-    bool FILE_SUCCESSFUL_OPENING_FILE = FileHandler::openReadFile(file_name, test);
+    bool FILE_SUCCESSFUL_OPENING_FLAG = FileHandler::openReadFile(file_name, test);
     test.close();
 
-    if(FILE_SUCCESSFUL_OPENING_FILE)
+    if(FILE_SUCCESSFUL_OPENING_FLAG)
     {
         file_write_stream.open(file_name, std::ofstream::out | std::ofstream::app);
-        FILE_SUCCESSFUL_OPENING_FILE = file_write_stream.is_open();
+        FILE_SUCCESSFUL_OPENING_FLAG = file_write_stream.is_open();
     }
 
-    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for appending" << std::endl; }
+    if(!FILE_SUCCESSFUL_OPENING_FLAG) { std::cout << "Error opening file " << file_name << " for appending" << std::endl; }
     else { std::cout << "File " << file_name << " was opened for appending" << std::endl; }
 
     std::cout << "<< openWriteFile() END_FUNC" << std::endl;
-    return FILE_SUCCESSFUL_OPENING_FILE;
+    return FILE_SUCCESSFUL_OPENING_FLAG;
 }
 
 bool FileHandler::closeFile(std::ifstream& file_read_stream)
 {
     std::cout << "closeFile() START_FUNC >>" << std::endl;
 
-    bool FILE_SUCCESSFUL_CLOSING_FILE = file_read_stream.is_open();
-    if (FILE_SUCCESSFUL_CLOSING_FILE) { std::cout << "File " << " was closed" << std::endl; file_read_stream.close(); }
+    bool FILE_SUCCESSFUL_CLOSING_FLAG = file_read_stream.is_open();
+    if (FILE_SUCCESSFUL_CLOSING_FLAG) { std::cout << "File " << " was closed" << std::endl; file_read_stream.close(); }
     else { std::cout << "File " << " was not closed, because it was not open" << std::endl; }
 
     std::cout << "<< closeFile() END_FUNC" << std::endl;
-    return FILE_SUCCESSFUL_CLOSING_FILE;
+    return FILE_SUCCESSFUL_CLOSING_FLAG;
 }
 
 bool FileHandler::closeFile(std::ofstream& file_write_stream)
 {
     std::cout << "closeFile() START_FUNC >>" << std::endl;
 
-    bool FILE_SUCCESSFUL_CLOSING_FILE = file_write_stream.is_open();
-    if (FILE_SUCCESSFUL_CLOSING_FILE) { std::cout << "File " << " was closed" << std::endl; file_write_stream.close(); }
+    bool FILE_SUCCESSFUL_CLOSING_FLAG = file_write_stream.is_open();
+    if (FILE_SUCCESSFUL_CLOSING_FLAG) { std::cout << "File " << " was closed" << std::endl; file_write_stream.close(); }
     else { std::cout << "File " << " was not closed, because it was not open" << std::endl; }
 
     std::cout << "<< closeFile() END_FUNC" << std::endl;
-    return FILE_SUCCESSFUL_CLOSING_FILE;
+    return FILE_SUCCESSFUL_CLOSING_FLAG;
 }
+
+void FileHandler::saveFile(std::ifstream& file_read_stream)
+{
+    return;
+}
+
+bool FileHandler::saveFile(const std::string& file_name, std::ofstream& file_write_stream)
+{
+    std::cout << "saveFile() START_FUNC >>" << std::endl;
+
+    bool FILE_SUCCESSFUL_CLOSING_FLAG = file_write_stream.is_open();
+    if (FILE_SUCCESSFUL_CLOSING_FLAG)
+    {
+        FILE_SUCCESSFUL_CLOSING_FLAG = FileHandler::closeFile(file_write_stream);
+        if(FILE_SUCCESSFUL_CLOSING_FLAG)
+        {
+            FILE_SUCCESSFUL_CLOSING_FLAG = FileHandler::openWriteFile(file_name, file_write_stream);
+        }
+    }
+
+    std::cout << "<< saveFile() END_FUNC" << std::endl;
+    return FILE_SUCCESSFUL_CLOSING_FLAG;
+}
+

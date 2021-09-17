@@ -13,6 +13,8 @@ namespace tests
     void test_openWriteFile();
     void test_closeReadFile();
     void test_closeWriteFile();
+
+    void test_saveWriteFile();
 }
 
 
