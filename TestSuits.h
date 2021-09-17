@@ -7,6 +7,10 @@ namespace tests
 {
     void test_createFile();
     void test_deleteFile();
+
+    void test_openReadFile();
+    void test_openRewriteFile();
+    void test_openWriteFile();
 }
 
 

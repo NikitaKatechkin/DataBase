@@ -43,7 +43,8 @@ int main()
     //std::cout << tools::newFieldAddCheck("name", "file.txt") << std::endl;
 
     tests::test_createFile();
-    tests::test_deleteFile();
+    tests::test_openWriteFile();
+    //tests::test_deleteFile();
 
     return 0;
 }

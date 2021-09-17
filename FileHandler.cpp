@@ -4,12 +4,11 @@ bool FileHandler::createFile(const std::string& file_name)
 {
     std::cout << "createFile() START_FUNC >>" << std::endl;
 
-    bool FILE_SUCCESSFUL_CREATION_FLAG = false;
-    std::ifstream file_read(file_name);
-    if(file_read.is_open())
+    bool FILE_SUCCESSFUL_CREATION_FLAG = std::ifstream (file_name).is_open();
+    //std::ifstream file_read(file_name);
+    if(FILE_SUCCESSFUL_CREATION_FLAG)
     {
         std::cout << "File "<< file_name << " already exist" << std::endl;
-        file_read.close();
     }
     else
     {
@@ -48,4 +47,57 @@ bool FileHandler::deleteFile(const std::string& file_name)
     return FILE_SUCCESSFUL_DELETION_FLAG;
 }
 
+bool FileHandler::openReadFile(const std::string& file_name, std::ifstream& file_read_stream)
+{
+    std::cout << "openReadFile() START_FUNC >>" << std::endl;
+    file_read_stream.open(file_name);
 
+    bool FILE_SUCCESSFUL_OPENING_FILE = file_read_stream.is_open();
+    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for reading" << std::endl; }
+    else { std::cout << "File " << file_name << " was opened for reading" << std::endl; }
+
+    std::cout << "<< openReadFile() END_FUNC" << std::endl;
+    return FILE_SUCCESSFUL_OPENING_FILE;
+}
+
+bool FileHandler::openRewriteFile(const std::string& file_name, std::ofstream& file_write_stream)
+{
+    std::cout << "openRewriteFile() START_FUNC >>" << std::endl;
+
+    std::ifstream test;
+    bool FILE_SUCCESSFUL_OPENING_FILE = FileHandler::openReadFile(file_name, test);
+    test.close();
+
+    if(FILE_SUCCESSFUL_OPENING_FILE)
+    {
+        file_write_stream.open(file_name);
+        FILE_SUCCESSFUL_OPENING_FILE = file_write_stream.is_open();
+    }
+
+    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for rewriting" << std::endl; }
+    else { std::cout << "File " << file_name << " was opened for rewriting" << std::endl; }
+
+    std::cout << "<< openRewriteFile() END_FUNC" << std::endl;
+    return FILE_SUCCESSFUL_OPENING_FILE;
+}
+
+bool FileHandler::openWriteFile(const std::string& file_name, std::ofstream& file_write_stream)
+{
+    std::cout << "openRewriteFile() START_FUNC >>" << std::endl;
+
+    std::ifstream test;
+    bool FILE_SUCCESSFUL_OPENING_FILE = FileHandler::openReadFile(file_name, test);
+    test.close();
+
+    if(FILE_SUCCESSFUL_OPENING_FILE)
+    {
+        file_write_stream.open(file_name, std::ofstream::out | std::ofstream::app);
+        FILE_SUCCESSFUL_OPENING_FILE = file_write_stream.is_open();
+    }
+
+    if(!FILE_SUCCESSFUL_OPENING_FILE) { std::cout << "Error opening file " << file_name << " for appending" << std::endl; }
+    else { std::cout << "File " << file_name << " was opened for appending" << std::endl; }
+
+    std::cout << "<< openRewriteFile() END_FUNC" << std::endl;
+    return FILE_SUCCESSFUL_OPENING_FILE;
+}
