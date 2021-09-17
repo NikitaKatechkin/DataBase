@@ -16,7 +16,8 @@ namespace FileHandler
     bool openReadFile(const std::string& file_name, std::ifstream& file_read_stream);
     bool openRewriteFile(const std::string& file_name, std::ofstream& file_write_stream);
     bool openWriteFile(const std::string& file_name, std::ofstream& file_write_stream);
-    //bool closeFile(std::ifstream& file_write_stream);
+    bool closeFile(std::ifstream& file_read_stream);
+    bool closeFile(std::ofstream& file_write_stream);
 }
 
 #endif // FILEHANDLER_H_INCLUDED

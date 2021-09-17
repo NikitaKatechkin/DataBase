@@ -24,7 +24,7 @@ void tests::test_openReadFile()
     FileHandler::openReadFile("test_file.txt", file_stream);
     file_stream.close();
 
-    FileHandler::openReadFile("tesle.txt", file_stream);
+    FileHandler::openReadFile("test_file.txt", file_stream);
     file_stream.close();
 
     FileHandler::openReadFile("", file_stream);
@@ -56,4 +56,34 @@ void tests::test_openWriteFile()
 
     FileHandler::openWriteFile("", file_stream);
     file_stream.close();
+}
+
+void tests::test_closeReadFile()
+{
+    std::ifstream file_stream;
+    FileHandler::openReadFile("test_file.txt", file_stream);
+    FileHandler::closeFile(file_stream);
+
+    FileHandler::openReadFile("test_file.txt", file_stream);
+    FileHandler::closeFile(file_stream);
+
+    FileHandler::openReadFile("test.txt", file_stream);
+    FileHandler::closeFile(file_stream);
+}
+
+void tests::test_closeWriteFile()
+{
+    std::ofstream file_stream;
+    FileHandler::openRewriteFile("test_file.txt", file_stream);
+    FileHandler::closeFile(file_stream);
+
+    FileHandler::openRewriteFile("test_file.txt", file_stream);
+    file_stream << "\nshit";
+    FileHandler::closeFile(file_stream);
+
+    FileHandler::openWriteFile("test.txt", file_stream);
+    FileHandler::closeFile(file_stream);
+
+    FileHandler::openRewriteFile("test.txt", file_stream);
+    FileHandler::closeFile(file_stream);
 }

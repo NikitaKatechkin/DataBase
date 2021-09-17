@@ -11,6 +11,8 @@ namespace tests
     void test_openReadFile();
     void test_openRewriteFile();
     void test_openWriteFile();
+    void test_closeReadFile();
+    void test_closeWriteFile();
 }
 
 
