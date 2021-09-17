@@ -1,4 +1,5 @@
 #include "DataBase.h"
+#include "TestSuits.h"
 
 int main()
 {
@@ -40,6 +41,9 @@ int main()
 
     //tools::addField("file.txt");
     //std::cout << tools::newFieldAddCheck("name", "file.txt") << std::endl;
+
+    tests::test_createFile();
+    tests::test_deleteFile();
 
     return 0;
 }
