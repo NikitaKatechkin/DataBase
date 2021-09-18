@@ -19,7 +19,7 @@ namespace FileHandler
     bool closeFile(std::ifstream& file_read_stream);
     bool closeFile(std::ofstream& file_write_stream);
 
-    void saveFile(std::ifstream& file_read_stream);
+    bool saveFile(std::ifstream& file_read_stream);
     bool saveFile(const std::string& file_name, std::ofstream& file_write_stream);
 }
 

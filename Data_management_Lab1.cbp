@@ -33,6 +33,10 @@
 		</Compiler>
 		<Unit filename="DataBase.cpp" />
 		<Unit filename="DataBase.h" />
+		<Unit filename="FileHandler.cpp" />
+		<Unit filename="FileHandler.h" />
+		<Unit filename="TestSuits.cpp" />
+		<Unit filename="TestSuits.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="tools.cpp" />
 		<Unit filename="tools.h" />

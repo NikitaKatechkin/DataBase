@@ -2,33 +2,117 @@
 
 void tests::test_createFile()
 {
-    FileHandler::createFile("test_file.txt");
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileHandler::createFile() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
 
-    FileHandler::createFile("test_file.txt");
+    bool test_result;
+    std::cout << "TEST_1_START >> Creation without obstacles" << std::endl;
+    test_result = FileHandler::createFile("test_file.txt");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Creation without obstacles << TEST_1_END" << std::endl;
 
-    FileHandler::createFile("");
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Creation with obstacle (FILE ALREADY EXIST RESULT EXPECTED)" << std::endl;
+    test_result = FileHandler::createFile("test_file.txt");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Creation with obstacle (FILE ALREADY EXIST RESULT EXPECTED) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Creation with obstacle (INVALID NAME ERROR RESULT EXPECTED)" << std::endl;
+    test_result =  FileHandler::createFile("");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Creation with obstacle (INVALID NAME ERROR RESULT EXPECTED) << TEST_3_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileHandler::createFile() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
 
 void tests::test_deleteFile()
 {
-    FileHandler::deleteFile("test_file.txt");
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileHandler::deleteFile() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
 
-    FileHandler::deleteFile("test_file.txt");
+    bool test_result;
 
-    FileHandler::deleteFile("");
+    std::cout << "TEST_1_START >> Deletion without obstacles" << std::endl;
+    FileHandler::createFile("test_file.txt");
+    test_result = FileHandler::deleteFile("test_file.txt");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Deletion without obstacles << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Deletion with obstacles (NO FILE EXISTS)" << std::endl;
+    std::cout << "EXPECTED ERROR MESSAGE BUT SUCCESS STATUS RETURNED" << std::endl;
+    test_result = FileHandler::deleteFile("test_file.txt");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Deletion with obstacles (NO FILE EXISTS) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Deletion with obstacles (INVALID FILE NAME)" << std::endl;
+    std::cout << "EXPECTED ERROR MESSAGE BUT SUCCESS STATUS RETURNED" << std::endl;
+    test_result = FileHandler::deleteFile("");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Deletion with obstacles (INVALID FILE NAME) << TEST_3_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileHandler::deleteFile() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
 
 void tests::test_openReadFile()
 {
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileHandler::openReadFile() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result;
+
+    std::cout << "TEST_1_START >> Opening for reading without obstackels" << std::endl;
+    FileHandler::createFile("test_file.txt");
     std::ifstream file_stream;
-    FileHandler::openReadFile("test_file.txt", file_stream);
+    test_result = FileHandler::openReadFile("test_file.txt", file_stream);
     file_stream.close();
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    FileHandler::deleteFile("test_file.txt");
+    std::cout << "Opening for reading without obstackels << TEST_1_END" << std::endl;
 
-    FileHandler::openReadFile("test_file.txt", file_stream);
-    file_stream.close();
+    std::cout << "-----------------------------------" << std::endl;
 
-    FileHandler::openReadFile("", file_stream);
+    std::cout << "TEST_2_START >> Opening for reading with obstacles (NO FILE EXISTS)" << std::endl;
+    test_result = FileHandler::openReadFile("test_file.txt", file_stream);
     file_stream.close();
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Opening for reading with obstacles (NO FILE EXISTS) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Opening for reading with obstacles (INVALID FILE NAME)" << std::endl;
+    test_result = FileHandler::openReadFile("", file_stream);
+    file_stream.close();
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Opening for reading with obstacles (INVALID FILE NAME) << TEST_3_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_4_START >> Opening for reading with obstacles (ALREADY OPENED)" << std::endl;
+    FileHandler::createFile("test_file.txt");
+    FileHandler::openReadFile("test_file.txt", file_stream);
+    test_result = FileHandler::openReadFile("test_file.txt", file_stream);
+    file_stream.close();
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    FileHandler::deleteFile("test_file.txt");
+    std::cout << "Opening for reading with obstacles (ALREADY OPENED) << TEST_4_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileHandler::openReadFile() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
 
 void tests::test_openRewriteFile()

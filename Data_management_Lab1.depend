@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1631917351 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
+1631990885 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
 	"DataBase.h"
 	"TestSuits.h"
 
@@ -23,16 +23,16 @@
 1631823621 c:\projects\cpp\hse\data_management_lab1\database.h
 	"tools.h"
 
-1631919638 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
+1631989378 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
 	"FileHandler.h"
 
-1631918613 c:\projects\cpp\hse\data_management_lab1\filehandler.h
+1631987356 c:\projects\cpp\hse\data_management_lab1\filehandler.h
 	<iostream>
 	<fstream>
 	<cstdio>
 	<cstring>
 
-1631919678 source:c:\projects\cpp\hse\data_management_lab1\testsuits.cpp
+1631990822 source:c:\projects\cpp\hse\data_management_lab1\testsuits.cpp
 	"TestSuits.h"
 
 1631919407 c:\projects\cpp\hse\data_management_lab1\testsuits.h
