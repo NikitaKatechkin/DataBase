@@ -113,7 +113,11 @@ bool FileHandler::openRewriteFile(const std::string& file_name, std::ofstream& f
     std::cout << "openRewriteFile() START_FUNC >>" << std::endl;
 
     bool FILE_SUCCESSFUL_OPENING_FLAG;
-    if (file_write_stream.is_open()) { FILE_SUCCESSFUL_OPENING_FLAG = true; }
+    if (file_write_stream.is_open())
+    {
+        FILE_SUCCESSFUL_OPENING_FLAG = true;
+        std::cout << "File '" << file_name << "' was already opened for rewriting" << std::endl;
+    }
     else
     {
         std::ifstream test;
@@ -138,14 +142,23 @@ bool FileHandler::openWriteFile(const std::string& file_name, std::ofstream& fil
 {
     std::cout << "openWriteFile() START_FUNC >>" << std::endl;
 
-    std::ifstream test;
-    bool FILE_SUCCESSFUL_OPENING_FLAG = FileHandler::openReadFile(file_name, test);
-    test.close();
-
-    if(FILE_SUCCESSFUL_OPENING_FLAG)
+    bool FILE_SUCCESSFUL_OPENING_FLAG;
+    if (file_write_stream.is_open())
     {
-        file_write_stream.open(file_name, std::ofstream::out | std::ofstream::app);
-        FILE_SUCCESSFUL_OPENING_FLAG = file_write_stream.is_open();
+        FILE_SUCCESSFUL_OPENING_FLAG = true;
+        std::cout << "File '" << file_name << "' was already opened for rewriting" << std::endl;
+    }
+    else
+    {
+        std::ifstream test;
+        FILE_SUCCESSFUL_OPENING_FLAG = FileHandler::openReadFile(file_name, test);
+        test.close();
+
+        if(FILE_SUCCESSFUL_OPENING_FLAG)
+        {
+            file_write_stream.open(file_name, std::ofstream::out | std::ofstream::app);
+            FILE_SUCCESSFUL_OPENING_FLAG = file_write_stream.is_open();
+        }
     }
 
     if(!FILE_SUCCESSFUL_OPENING_FLAG) { std::cout << "Error opening file " << file_name << " for appending" << std::endl; }
@@ -160,7 +173,16 @@ bool FileHandler::closeFile(std::ifstream& file_read_stream)
     std::cout << "closeFile() START_FUNC >>" << std::endl;
 
     bool FILE_SUCCESSFUL_CLOSING_FLAG = file_read_stream.is_open();
-    if (FILE_SUCCESSFUL_CLOSING_FLAG) { std::cout << "File " << " was closed" << std::endl; file_read_stream.close(); }
+    if (FILE_SUCCESSFUL_CLOSING_FLAG)
+    {
+        std::cout << "File " << " was closed" << std::endl;
+        file_read_stream.close();
+        FILE_SUCCESSFUL_CLOSING_FLAG = !file_read_stream.is_open();
+        if (!FILE_SUCCESSFUL_CLOSING_FLAG)
+        {
+            std::cout << "Error when closing files" << std::endl;
+        }
+    }
     else { std::cout << "File " << " was not closed, because it was not open" << std::endl; }
 
     std::cout << "<< closeFile() END_FUNC" << std::endl;
@@ -172,7 +194,16 @@ bool FileHandler::closeFile(std::ofstream& file_write_stream)
     std::cout << "closeFile() START_FUNC >>" << std::endl;
 
     bool FILE_SUCCESSFUL_CLOSING_FLAG = file_write_stream.is_open();
-    if (FILE_SUCCESSFUL_CLOSING_FLAG) { std::cout << "File " << " was closed" << std::endl; file_write_stream.close(); }
+    if (FILE_SUCCESSFUL_CLOSING_FLAG)
+    {
+        std::cout << "File " << " was closed" << std::endl;
+        file_write_stream.close();
+        FILE_SUCCESSFUL_CLOSING_FLAG = !file_write_stream.is_open();
+        if (!FILE_SUCCESSFUL_CLOSING_FLAG)
+        {
+            std::cout << "Error when closing files" << std::endl;
+        }
+    }
     else { std::cout << "File " << " was not closed, because it was not open" << std::endl; }
 
     std::cout << "<< closeFile() END_FUNC" << std::endl;
@@ -195,8 +226,12 @@ bool FileHandler::saveFile(const std::string& file_name, std::ofstream& file_wri
         if(FILE_SUCCESSFUL_CLOSING_FLAG)
         {
             FILE_SUCCESSFUL_CLOSING_FLAG = FileHandler::openWriteFile(file_name, file_write_stream);
+            if (FILE_SUCCESSFUL_CLOSING_FLAG) { std::cout << "File " << file_name << " was saved" <<  std::endl; }
+            else { std::cout << "File " << file_name << " was failed to reopen" << std::endl; }
         }
+        else { std::cout << "Error, when closing file for saving" << std::endl; }
     }
+    else { std::cout << "File " << file_name << " was not open. Can not save." << std::endl; }
 
     std::cout << "<< saveFile() END_FUNC" << std::endl;
     return FILE_SUCCESSFUL_CLOSING_FLAG;
