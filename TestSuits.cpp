@@ -309,3 +309,214 @@ void tests::test_saveWriteFile()
     std::cout << "~~~FileHandler::saveWriteFile() TEST_SUITE_END~~~" << std::endl;
     std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
 }
+
+void tests::test_goToLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::goToLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result;
+    std::string checkpoint_line;
+
+    std::ifstream file_read_stream;
+
+    std::cout << "TEST_1_START >> Going to line # without obstacles" << std::endl;
+    FileHandler::openReadFile("text_file.txt", file_read_stream);
+    test_result = FileEditor::goToLine(1, file_read_stream);
+    checkpoint_line = "";
+    if (test_result) { std::getline(file_read_stream, checkpoint_line); }
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << checkpoint_line << std::endl; }
+    std::cout << "Going to line # without obstacles << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Going to line # with obstacles (OUT OF BORDERS)" << std::endl;
+    FileHandler::openReadFile("text_file.txt", file_read_stream);
+    test_result = FileEditor::goToLine(6, file_read_stream);
+    checkpoint_line = "";
+    if (test_result) { std::getline(file_read_stream, checkpoint_line); }
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << checkpoint_line << std::endl; }
+    std::cout << "Going to line # with obstacles (OUT OF BORDERS) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Going to line # with obstacles (FILE DO NOT OPEN)" << std::endl;
+    test_result = FileEditor::goToLine(6, file_read_stream);
+    checkpoint_line = "";
+    if (test_result) { std::getline(file_read_stream, checkpoint_line); }
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << checkpoint_line << std::endl; }
+    std::cout << "Going to line # with obstacles (FILE DO NOT OPEN) << TEST_3_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::goToLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+void tests::test_copyLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::copyLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result;
+    std::string checkpoint_line;
+
+    std::ifstream file_read_stream;
+
+    std::cout << "TEST_1_START >> Copying line # without obstacles" << std::endl;
+    FileHandler::openReadFile("text_file.txt", file_read_stream);
+    checkpoint_line = "";
+    test_result = FileEditor::copyLine(1, file_read_stream, checkpoint_line);
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << "Copied string: "<< checkpoint_line << std::endl; }
+    std::cout << "Copying line # without obstacles << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Copying line # with obstacles (OUT OF BORDERS)" << std::endl;
+    FileHandler::openReadFile("text_file.txt", file_read_stream);
+    checkpoint_line = "";
+    test_result = FileEditor::copyLine(6, file_read_stream, checkpoint_line);
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << "Copied string: "<< checkpoint_line << std::endl; }
+    std::cout << "Copying line # with obstacles (OUT OF BORDERS) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Copying line # with obstacles (FILE DO NOT OPEN)" << std::endl;
+    checkpoint_line = "";
+    test_result = FileEditor::copyLine(6, file_read_stream, checkpoint_line);
+    FileHandler::closeFile(file_read_stream);
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    if (test_result) { std::cout << "Copied string: "<< checkpoint_line << std::endl; }
+    std::cout << "Copying line # with obstacles (FILE DO NOT OPEN) << TEST_3_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::copyLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+void tests::test_changeLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::changeLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result = false;
+
+    std::cout << "TEST_1_START >> Complex test changing line # with obstacles (OUT OF BOUNDS)" << std::endl;
+    int counter = 0;
+    while (!test_result)
+    {
+        test_result = !(FileEditor::changeLine(counter, "text_file.txt", "Another diff 124 line", ";"));
+        counter++;
+    }
+    std::cout << "Complex test changing line # with obstacles (OUT OF BOUNDS) << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Changing line # with obstacles (NO FILE EXISTS)" << std::endl;
+    test_result = FileEditor::changeLine(counter, "wrong_file.txt", "Another diff 124 line", ";");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Changing line # with obstacles (NO FILE EXISTS) << TEST_2_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::changeLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+void tests::test_insertLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::insertLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result = false;
+
+    std::cout << "TEST_1_START >> Complex test inserting line # with obstacles (OUT OF BOUNDS)" << std::endl;
+    for (int counter = 0; counter < 4; counter++)
+    {
+        test_result = !(FileEditor::insertLine(counter, "text_file.txt", "Inserted 124 line", ";"));
+    }
+    std::cout << "Complex test inserting line # with obstacles (OUT OF BOUNDS) << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_2_START >> Inserting line # with obstacles (NO FILE EXISTS)" << std::endl;
+    test_result = FileEditor::insertLine(0, "wrong_file.txt", "Another diff 124 line", ";");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Inserting line # with obstacles (NO FILE EXISTS) << TEST_2_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    std::cout << "TEST_3_START >> Inserting line # with obstacles (WRONG LINE)" << std::endl;
+    test_result = FileEditor::insertLine(15, "text_file.txt", "Another diff 124 line", ";");
+    std::cout << "RESULT OF EXECUTION: " << test_result << std::endl;
+    std::cout << "Inserting line # with obstacles (WRONG LINE) << TEST_3_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::insertLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+void tests::test_removeLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::removeLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result = false;
+
+    std::cout << "TEST_1_START >> Complex test removing line # with obstacles (OUT OF BOUNDS)" << std::endl;
+    for (int counter = 0; counter < 5; counter++)
+    {
+        test_result = !(FileEditor::removeLine(1, "text_file.txt"));
+        std::cout << "RESULT OF EXECUTION: " << !test_result << std::endl;
+    }
+    std::cout << "Complex test removing line # with obstacles (OUT OF BOUNDS) << TEST_1_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::removeLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
+
+void tests::test_addToLine()
+{
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+    std::cout << "~~FileEditor::addToLine() TEST_SUITE_START~~" << std::endl;
+    std::cout << std::endl;
+
+    bool test_result = false;
+
+    std::cout << "TEST_1_START >> Complex test adding to line # with obstacles (OUT OF BOUNDS)" << std::endl;
+    for (int counter = 0; counter < 4; counter++)
+    {
+        test_result = !(FileEditor::addToLine(counter, "text_file.txt", "Additional", ";"));
+        std::cout << "RESULT OF EXECUTION: " << !test_result << std::endl;
+    }
+    std::cout << "Complex test adding to line # with obstacles (OUT OF BOUNDS) << TEST_1_END" << std::endl;
+
+    std::cout << "-----------------------------------" << std::endl;
+
+    test_result = false;
+    std::cout << "TEST_2_START >> Complex test adding to line # with obstacles (OUT OF BOUNDS)" << std::endl;
+    for (int counter = 0; counter < 4; counter++)
+    {
+        test_result = !(FileEditor::addToLine(counter, "text_file.txt", "Additional", ";", 5));
+        std::cout << "RESULT OF EXECUTION: " << !test_result << std::endl;
+    }
+    std::cout << "Complex test adding to line # with obstacles (OUT OF BOUNDS) << TEST_2_END" << std::endl;
+
+    std::cout << std::endl;
+    std::cout << "~~~FileEditor::addToLine() TEST_SUITE_END~~~" << std::endl;
+    std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+}
