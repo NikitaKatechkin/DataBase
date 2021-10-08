@@ -5,6 +5,7 @@
 		<Option title="Data_management_Lab1" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="FileAPI/;Tests/;DataBaseAPI/;DataBaseAPI/FeatureHandler/;DataBaseAPI/DataBaseHandler/;DataBaseAPI/DataBaseHandler/Sources/;DataBaseAPI/DataBaseHandler/Headers/;Tests/Headers/;Tests/Sources/;DataBaseAPI/FeatureHandler/Sources/;DataBaseAPI/FeatureHandler/Headers/;InputOutputAPI/;InputOutputAPI/Headers/;InputOutputAPI/Sources/;FileAPI/FileEditor/;FileAPI/FileEditor/Sources/;FileAPI/FileEditor/Headers/;FileAPI/FileHandler/;FileAPI/FileHandler/Headers/;FileAPI/FileHandler/Sources/" />
 		<Build>
 			<Target title="Debug">
 				<Option output="bin/Debug/Data_management_Lab1" prefix_auto="1" extension_auto="1" />
@@ -31,15 +32,47 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="CustomIO.cpp">
+			<Option virtualFolder="InputOutputAPI/Sources/" />
+		</Unit>
+		<Unit filename="CustomIO.h">
+			<Option virtualFolder="InputOutputAPI/Headers/" />
+		</Unit>
 		<Unit filename="DataBase.cpp" />
 		<Unit filename="DataBase.h" />
-		<Unit filename="FileEditor.cpp" />
-		<Unit filename="FileEditor.h" />
-		<Unit filename="FileHandler.cpp" />
-		<Unit filename="FileHandler.h" />
-		<Unit filename="TestSuits.cpp" />
-		<Unit filename="TestSuits.h" />
+		<Unit filename="DataBaseFeatureHandler.cpp">
+			<Option virtualFolder="DataBaseAPI/FeatureHandler/Sources/" />
+		</Unit>
+		<Unit filename="DataBaseFeatureHandler.h">
+			<Option virtualFolder="DataBaseAPI/FeatureHandler/Headers/" />
+		</Unit>
+		<Unit filename="DataBaseHandler.cpp">
+			<Option virtualFolder="DataBaseAPI/DataBaseHandler/Sources/" />
+		</Unit>
+		<Unit filename="DataBaseHandler.h">
+			<Option virtualFolder="DataBaseAPI/DataBaseHandler/Headers/" />
+		</Unit>
+		<Unit filename="FileEditor.cpp">
+			<Option virtualFolder="FileAPI/FileEditor/Sources/" />
+		</Unit>
+		<Unit filename="FileEditor.h">
+			<Option virtualFolder="FileAPI/FileEditor/Headers/" />
+		</Unit>
+		<Unit filename="FileHandler.cpp">
+			<Option virtualFolder="FileAPI/FileHandler/Sources/" />
+		</Unit>
+		<Unit filename="FileHandler.h">
+			<Option virtualFolder="FileAPI/FileHandler/Headers/" />
+		</Unit>
+		<Unit filename="TestSuits.cpp">
+			<Option virtualFolder="Tests/Sources/" />
+		</Unit>
+		<Unit filename="TestSuits.h">
+			<Option virtualFolder="Tests/Headers/" />
+		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="testField.cpp" />
+		<Unit filename="testField.h" />
 		<Unit filename="tools.cpp" />
 		<Unit filename="tools.h" />
 		<Extensions>

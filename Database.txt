@@ -1,0 +1,5 @@
+Database.txt
+first;second;third;
+1;0;0;
+v;0;z;
+l;0;z;
