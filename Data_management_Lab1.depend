@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1633712247 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
+1634582683 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
 	"DataBase.h"
 	"TestSuits.h"
 	"testField.h"
@@ -60,18 +60,19 @@
 1633338860 c:\projects\cpp\hse\data_management_lab1\testfield.h
 	"FileEditor.h"
 
-1633291867 source:c:\projects\cpp\hse\data_management_lab1\databasefeaturehandler.cpp
+1633730267 source:c:\projects\cpp\hse\data_management_lab1\databasefeaturehandler.cpp
 	"DataBaseFeatureHandler.h"
 
-1633122469 c:\projects\cpp\hse\data_management_lab1\databasefeaturehandler.h
+1633730250 c:\projects\cpp\hse\data_management_lab1\databasefeaturehandler.h
 	"FileEditor.h"
 	"FileHandler.h"
 
-1633714968 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
+1634584870 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
 	"DataBaseHandler.h"
 
-1633714240 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
+1634039798 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
 	<algorithm>
+	<sstream>
 	"DataBaseFeatureHandler.h"
 	"CustomIO.h"
 

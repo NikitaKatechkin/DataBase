@@ -156,7 +156,7 @@ int main()
     //std::cout << FileEditor::goToLine(4, read_stream) << std::endl;
     //FileEditor::changeLine(2, file_name, "", "");
 
-    std::vector<int> results;
+    /*std::vector<int> results;
     std::ifstream database_read_stream;
     std::string data_base_file_name;
     std::vector<std::string> key_features_list;
@@ -166,11 +166,43 @@ int main()
     std::vector<std::string> features_list;
     DataBaseHandler::deleteObjectDataBaseV2Acknowledge(results, database_read_stream, data_base_file_name, key_features_list, non_key_features_list,
                                                                                             search_features_values_list, search_features_order_indexes_list, features_list);
-    /*std::cout << "FOUNDED RECORDS:" << std::endl;
+    std::cout << "FOUNDED RECORDS:" << std::endl;
     for (auto iter = key_features_list.begin(); iter < key_features_list.end(); iter++)
     {
         std::cout << (*iter) << std::endl;
     }*/
+
+    /*std::vector<unsigned int> results;
+
+    std::string data_base_file_name = "Database.txt";
+
+    bool status = DataBaseHandler::searchRecordsDataBase(data_base_file_name, results);
+    std::cout << status << std::endl;
+    std::vector<std::string> founded_records;
+    for (auto iter = results.begin(); iter < results.end(); iter++)
+    {
+        std::string line;
+        bool ALARM_FLAG  = FileEditor::copyLineV2(*iter, data_base_file_name, line);
+        if (!ALARM_FLAG) {std::cout << "BAD EXCEPTION INVALID NOT PROCESSED OUTPUT" << std::endl; break;}
+        founded_records.push_back(line);
+    }
+
+    std::cout << "FOUNDED RECORDS:" << std::endl;
+    for (auto iter = founded_records.begin(); iter < founded_records.end(); iter++)
+    {
+        std::cout << (*iter) << std::endl;
+    }*/
+
+    /*std::string data_base_file_name = "Database.txt";
+    bool status = DataBaseHandler::addRecordsDataBase(data_base_file_name);
+    std::cout << status << std::endl;*/
+
+    /*std::string data_base_file_name = "Database.txt";
+    bool status = DataBaseHandler::deleteRecordsDataBase(data_base_file_name);
+    std::cout << status << std::endl;*/
+
+    std::string file_name;
+    DataBaseHandler::editRecordsDataBase(file_name);
 
     return 0;
 }

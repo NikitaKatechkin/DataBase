@@ -13,6 +13,8 @@ namespace DataBaseFeatureHandler
 
     bool independentGetFeature(unsigned int feature_num, const std::string& object, const std::string& feature_delimiter, std::string& feature);
     bool independentGetVecOfFeatures(const std::string& object, const std::string& feature_delimiter, std::vector<std::string>& features_vector);
+    bool independentGetFeaturesList(std::vector<unsigned int>& features_indexes, const std::string& object,
+                                    const std::string& feature_delimiter, std::vector<std::string>& features_list);
 
     bool mergeVecOfFeaturesToStr(std::vector<std::string>& features_vector,
                                                             const std::string& feature_delimiter, std::string& object);

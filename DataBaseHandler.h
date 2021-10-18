@@ -2,6 +2,7 @@
 #define DATABASEHANDLER_H_INCLUDED
 
 #include <algorithm>
+#include <sstream>
 
 #include "DataBaseFeatureHandler.h"
 #include "CustomIO.h"
@@ -141,6 +142,31 @@ namespace DataBaseHandler
                                             std::vector<std::string>& key_features_list, std::vector<std::string>& non_key_features_list,
                                             std::vector<std::string>& search_features_values_list, std::vector<unsigned int>& search_features_order_indexes_list,
                                             std::vector<std::string>& features_list);
+
+    enum ServiceLines
+    {
+        DATABASE_NAME_LINE = 0,
+        DATABASE_FIELDS_LINE,
+        DATABASE_KEY_SIGNS_LINE
+    };
+
+    bool isStringDataBaseFileName(const std::string& file_name, const std::string& extension);
+
+    bool getFeaturesFromRecord(std::string& data_base_file_name, unsigned int line_number, std::vector<std::string>& features_list);
+
+    void getCandidatesIndexesList(std::vector<std::string>& features_list, std::vector<unsigned int>& candidates_indexes_list, const std::string& candidate_approval_question);
+
+    bool comparePairOfFeaturesList(std::vector<std::string>& first_features_list, std::vector<std::string>& second_features_list);
+
+    bool searchRecordsDataBase(std::string& data_base_file_name, std::vector<unsigned int>& found_records_indexes);
+
+    bool getMaskedFeatureList(std::vector<std::string>& features_list, std::vector<std::string>& mask, const std::string& key_sign, std::vector<unsigned int>& masked_features_indexes_list);
+
+    bool addRecordsDataBase(std::string& data_base_file_name);
+
+    bool deleteRecordsDataBase(std::string& data_base_file_name);
+
+    bool editRecordsDataBase(std::string& data_base_file_name);
 }
 
 

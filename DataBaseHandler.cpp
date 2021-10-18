@@ -1024,3 +1024,393 @@ bool DataBaseHandler::deleteObjectDataBaseV2Acknowledge(std::vector<int>& founde
 
     return SUCCESS_DELETING_FLAG;
 }
+
+bool DataBaseHandler::isStringDataBaseFileName(const std::string& file_name, const std::string& extension)
+{
+    if (extension.size() >= file_name.size()) { return false; }
+
+    for (unsigned int index = 0; index < extension.size(); index++)
+    {
+        if (file_name[(file_name.size() - 1) - index] != extension[(extension.size() - 1) - index]) { return false; }
+    }
+
+    return true;
+}
+
+bool DataBaseHandler::getFeaturesFromRecord(std::string& data_base_file_name, unsigned int line_number, std::vector<std::string>& features_list)
+{
+    if(!DataBaseHandler::isStringDataBaseFileName(data_base_file_name, ".txt"))
+    {
+        data_base_file_name = CustomIO::safeInputString("Input DataBase name to delete");
+        data_base_file_name += ".txt";
+    }
+
+    std::string record;
+    bool CORRECT_READ_LINE_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+    if (!CORRECT_READ_LINE_FLAG) { return CORRECT_READ_LINE_FLAG; }
+
+    bool RECORD_EXISTANCE_FLAG = DataBaseFeatureHandler::independentGetVecOfFeatures(record, ";", features_list);
+    return RECORD_EXISTANCE_FLAG;
+}
+
+void DataBaseHandler::getCandidatesIndexesList(std::vector<std::string>& features_list, std::vector<unsigned int>& candidates_indexes_list, const std::string& candidate_approval_question)
+{
+    bool user_answer;
+    for (unsigned int feature_index = 0; feature_index < features_list.size(); feature_index++)
+    {
+        user_answer = CustomIO::safeInputBool(candidate_approval_question + features_list[feature_index] + "?");
+        if (user_answer) { candidates_indexes_list.push_back(feature_index); }
+    }
+}
+
+bool DataBaseHandler::comparePairOfFeaturesList(std::vector<std::string>& first_features_list, std::vector<std::string>& second_features_list)
+{
+    bool EQUAL_SIZE_FLAG = (first_features_list.size() == second_features_list.size());
+    if (!EQUAL_SIZE_FLAG) { return EQUAL_SIZE_FLAG; }
+
+    bool EQUAL_COMPARED_FEATURES_FLAG = true;
+    for (unsigned int feature_index = 0; feature_index < first_features_list.size(); feature_index++)
+    {
+        EQUAL_COMPARED_FEATURES_FLAG = (first_features_list[feature_index] == second_features_list[feature_index]);
+        if (!EQUAL_COMPARED_FEATURES_FLAG) { break; }
+    }
+
+    return EQUAL_COMPARED_FEATURES_FLAG;
+}
+
+bool DataBaseHandler::searchRecordsDataBase(std::string& data_base_file_name, std::vector<unsigned int>& found_records_indexes)
+{
+    std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = CleanDBHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    std::vector<std::string> features_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, features_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES) { return SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES; }
+
+    std::vector<unsigned int> candidate_features_indexes_list;
+    DataBaseHandler::getCandidatesIndexesList(features_list, candidate_features_indexes_list, "Do you want to search by field ");
+
+    std::vector<std::string> candidate_features_values_list;
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        candidate_features_values_list.push_back(CustomIO::safeInputString("Input value of feature '" + features_list[(*iter)] + "' to find"));
+    }
+
+    std::vector<std::string> tmp_comparing_features_values_list;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+    {
+        bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+        if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+        bool SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, record, ";", tmp_comparing_features_values_list);
+        if (!SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG) { return SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG; }
+
+        if (DataBaseHandler::comparePairOfFeaturesList(tmp_comparing_features_values_list, candidate_features_values_list)) { found_records_indexes.push_back(line_number); }
+
+        tmp_comparing_features_values_list.clear();
+        line_number++;
+    }
+
+    return true;
+}
+
+bool DataBaseHandler::getMaskedFeatureList(std::vector<std::string>& features_list, std::vector<std::string>& mask, const std::string& key_sign, std::vector<unsigned int>& masked_features_indexes_list)
+{
+    bool EQUAL_SIZE_FLAG = (features_list.size() == mask.size());
+    if (!EQUAL_SIZE_FLAG) { return EQUAL_SIZE_FLAG; }
+
+    bool MASKED_FEATURE_FLAG;
+    for (unsigned int feature_index = 0; feature_index < features_list.size(); feature_index++)
+    {
+        MASKED_FEATURE_FLAG = (mask[feature_index] == key_sign);
+        if (MASKED_FEATURE_FLAG) {  masked_features_indexes_list.push_back(feature_index); }
+    }
+
+    return true;
+}
+
+bool DataBaseHandler::addRecordsDataBase(std::string& data_base_file_name)
+{
+    //Checking of file existanse
+    std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = CleanDBHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    //Extracting list of DB features
+    std::vector<std::string> features_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, features_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES) { return SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES; }
+
+    //Generating candidate features indexes list
+    std::vector<unsigned int> candidate_features_indexes_list(features_list.size());
+    std::generate(candidate_features_indexes_list.begin(), candidate_features_indexes_list.end(), [n = 0] () mutable { return n++; });
+
+    //Getting values of features of a new record from user
+    std::vector<std::string> candidate_features_values_list;
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        candidate_features_values_list.push_back(CustomIO::safeInputString("Input value of feature '" + features_list[(*iter)] + "' of adding record"));
+    }
+
+    //Creating a string to input
+    std::string tmp_adding_line;
+    bool SUCCESS_MERGING_LIST_INTO_ADDING_LINE_FLAG = DataBaseFeatureHandler::mergeVecOfFeaturesToStr(candidate_features_values_list, ";", tmp_adding_line);
+    if (!SUCCESS_MERGING_LIST_INTO_ADDING_LINE_FLAG) { return SUCCESS_MERGING_LIST_INTO_ADDING_LINE_FLAG; }
+
+    //Generating key features indexes list
+    std::vector<std::string> mask;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_KEY_SIGNS = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE, mask);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_KEY_SIGNS) { return SUCCESS_EXTRACT_OF_DATA_BASE_KEY_SIGNS; }
+
+    candidate_features_indexes_list.clear();
+    DataBaseHandler::getMaskedFeatureList(features_list, mask, "1", candidate_features_indexes_list);
+
+    //Getting values of key features of a new record
+    candidate_features_values_list.clear();
+    bool SUCCESS_KEY_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, tmp_adding_line, ";", candidate_features_values_list);
+    if (!SUCCESS_KEY_FEATURES_EXTRACTION_FLAG) { return SUCCESS_KEY_FEATURES_EXTRACTION_FLAG; }
+
+    //Checking if new record is unique
+    std::vector<std::string> tmp_comparing_features_values_list;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    bool SUCCESS_ADDING_RECORD_FLAG;
+
+    bool FIRST_RECORD_CASE_FLAG = !(FileEditor::goToLine(line_number, tmp_data_base_stream));
+    if (!FIRST_RECORD_CASE_FLAG)
+    {
+        while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+        {
+            bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+            if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+            bool SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, record, ";", tmp_comparing_features_values_list);
+            if (!SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG) { return SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG; }
+
+            if (DataBaseHandler::comparePairOfFeaturesList(tmp_comparing_features_values_list, candidate_features_values_list)) { return false; }
+
+            tmp_comparing_features_values_list.clear();
+            line_number++;
+        }
+
+        SUCCESS_ADDING_RECORD_FLAG = FileEditor::insertLine(DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1, data_base_file_name, tmp_adding_line, "");
+    }
+    else
+    {
+        bool NAME_ADDING_FLAG = FileEditor::addToLine(DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE, data_base_file_name, "", "\n");
+        if (!NAME_ADDING_FLAG) { return NAME_ADDING_FLAG; }
+
+        SUCCESS_ADDING_RECORD_FLAG = FileEditor::changeLineRemoveCompetable(DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1, data_base_file_name, tmp_adding_line, "\0");
+    }
+
+    return SUCCESS_ADDING_RECORD_FLAG;
+}
+
+bool DataBaseHandler::deleteRecordsDataBase(std::string& data_base_file_name)
+{
+    std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = CleanDBHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    std::vector<std::string> features_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, features_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES) { return SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES; }
+
+    std::vector<unsigned int> candidate_features_indexes_list;
+    DataBaseHandler::getCandidatesIndexesList(features_list, candidate_features_indexes_list, "Do you want to delete by field ");
+
+    std::vector<std::string> candidate_features_values_list;
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        candidate_features_values_list.push_back(CustomIO::safeInputString("Input value of feature '" + features_list[(*iter)] + "' records with which you want to delete"));
+    }
+
+    std::vector<std::string> tmp_comparing_features_values_list;
+    std::vector<unsigned int> found_records_indexes;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+    {
+        bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+        if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+        bool SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, record, ";", tmp_comparing_features_values_list);
+        if (!SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG) { return SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG; }
+
+        if (DataBaseHandler::comparePairOfFeaturesList(tmp_comparing_features_values_list, candidate_features_values_list)) { found_records_indexes.push_back(line_number); }
+
+        tmp_comparing_features_values_list.clear();
+        line_number++;
+    }
+
+    int delet_offset = 0;
+    bool SUCCESS_DELETING_FLAG;
+    for (auto iter = found_records_indexes.begin(); iter != found_records_indexes.end(); iter++, delet_offset++)
+    {
+        SUCCESS_DELETING_FLAG = FileEditor::removeLine(((*iter) - delet_offset), data_base_file_name);
+        if (!SUCCESS_DELETING_FLAG) { return SUCCESS_DELETING_FLAG; }
+    }
+
+    return SUCCESS_DELETING_FLAG;
+}
+
+bool DataBaseHandler::editRecordsDataBase(std::string& data_base_file_name)
+{
+    /*std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = CleanDBHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    std::vector<std::string> features_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, features_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES) { return SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES; }
+
+    //Extracting key features indexes
+    std::vector<std::string> key_features_mask_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, key_features_mask_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK) { return SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK; }
+
+    std::vector<unsigned int> candidate_features_indexes_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES = DataBaseHandler::getMaskedFeatureList(features_list, key_features_mask_list, "1", candidate_features_indexes_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES) { return SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES; }*/
+
+    //Selecting line_number
+    /*std::string input_editting_record_line_number = CustomIO::safeInputString("Input record line number");
+    bool INPUT_NUMBER_FLAG = std::ranges::all_of(input_editting_record_line_number.begin(), input_editting_record_line_number.end(), [](char c){ return std::isdigit(c) != 0; });
+    if (!INPUT_NUMBER_FLAG) { return INPUT_NUMBER_FLAG; }
+
+    std::stringstream tmp_str_stream(input_editting_record_line_number);
+    unsigned int editting_record_line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    tmp_str_stream >> editting_record_line_number;
+    editting_record_line_number + DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE;*/
+    //NOTES USE SEARCH INSTEAD OF LINE NUMBER
+
+    //Editing wanted features
+    /*std::vector<unsigned int> edit_features_indexes_list;
+    DataBaseHandler::getCandidatesIndexesList(features_list, edit_features_indexes_list, "Do you want to edit field ");
+
+    std::vector<std::string> edit_features_values_list;
+    for (auto iter = edit_features_indexes_list.begin(); iter != edit_features_indexes_list.end(); iter++)
+    {
+        edit_features_values_list.push_back(CustomIO::safeInputString("Input value of feature '" + features_list[(*iter)] + "' to find"));
+    }
+
+    std::vector<std::string> tmp_comparing_features_values_list;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+    {
+        bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+        if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+        bool SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, record, ";", tmp_comparing_features_values_list);
+        if (!SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG) { return SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG; }
+
+        //if (DataBaseHandler::comparePairOfFeaturesList(tmp_comparing_features_values_list, candidate_features_values_list)) { found_records_indexes.push_back(line_number); }
+
+        tmp_comparing_features_values_list.clear();
+        line_number++;
+    }
+
+    return true;*/
+    std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = CleanDBHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    std::vector<std::string> features_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE, features_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES) { return SUCCESS_EXTRACT_OF_DATA_BASE_FEATURES; }
+
+    //Extracting key features indexes
+    std::vector<std::string> key_features_mask_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE, key_features_mask_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK) { return SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_MASK; }
+
+    std::vector<unsigned int> candidate_features_indexes_list;
+    bool SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES = DataBaseHandler::getMaskedFeatureList(features_list, key_features_mask_list, "1", candidate_features_indexes_list);
+    if (!SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES) { return SUCCESS_EXTRACT_OF_DATA_BASE_KEY_FEATURES_INDEXES; }
+
+    //Extracting values to search editing line
+    std::vector<std::string> candidate_features_values_list;
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        candidate_features_values_list.push_back(CustomIO::safeInputString("Input value of feature '" + features_list[(*iter)] + "' you want to find to be edited"));
+    }
+
+    /*for (auto iter = key_features_mask_list.begin(); iter != key_features_mask_list.end(); iter++)
+    {
+        std::cout <<  *iter << ";";
+    }
+    std::cout << std::endl;*/
+
+    std::vector<std::string> tmp_comparing_features_values_list;
+    std::vector<unsigned int> found_records_indexes;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE + 1;
+    while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+    {
+        bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+        if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+        bool SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetFeaturesList(candidate_features_indexes_list, record, ";", tmp_comparing_features_values_list);
+        if (!SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG) { return SUCCESS_COMPARING_FEATURES_EXTRACTION_FLAG; }
+
+        if (DataBaseHandler::comparePairOfFeaturesList(tmp_comparing_features_values_list, candidate_features_values_list)) { found_records_indexes.push_back(line_number); }
+
+        tmp_comparing_features_values_list.clear();
+        line_number++;
+    }
+
+    bool SUCCESS_FIND_EDITING_LINE_FLAG = (found_records_indexes.size() == 1);
+    if (!SUCCESS_FIND_EDITING_LINE_FLAG) { return SUCCESS_FIND_EDITING_LINE_FLAG; }
+
+    candidate_features_indexes_list.clear();
+    DataBaseHandler::getCandidatesIndexesList(features_list, candidate_features_indexes_list, "Do you want to edit field ");
+
+    candidate_features_values_list.clear();
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        candidate_features_values_list.push_back(CustomIO::safeInputString("Input new value of feature '" + features_list[(*iter)] + "'"));
+    }
+
+    std::vector<std::string> edit_object_features_values_list;
+
+    bool SUCCESS_EXTRACT_FEATRES_OF_EDITING_OBJECT_FLAG = DataBaseHandler::getFeaturesFromRecord(data_base_file_name, found_records_indexes[0], edit_object_features_values_list);
+    if (!SUCCESS_EXTRACT_FEATRES_OF_EDITING_OBJECT_FLAG) { return SUCCESS_EXTRACT_FEATRES_OF_EDITING_OBJECT_FLAG; }
+
+    /*for (auto iter = edit_object_features_values_list.begin(); iter != edit_object_features_values_list.end(); iter++)
+    {
+        std::cout <<  *iter << ";";
+    }*/
+
+    for (auto iter = candidate_features_indexes_list.begin(); iter != candidate_features_indexes_list.end(); iter++)
+    {
+        edit_object_features_values_list[*iter] = candidate_features_values_list[0];
+        candidate_features_values_list.erase(candidate_features_values_list.begin());
+    }
+
+    /*for (auto iter = edit_object_features_values_list.begin(); iter != edit_object_features_values_list.end(); iter++)
+    {
+        std::cout <<  *iter << ";";
+    }*/
+
+    std::string edited_line;
+    bool SUCCESS_TRANSFORM_EDITING_FLAG = DataBaseFeatureHandler::mergeVecOfFeaturesToStr(edit_object_features_values_list, ";", edited_line);
+    if(!SUCCESS_TRANSFORM_EDITING_FLAG) { return SUCCESS_TRANSFORM_EDITING_FLAG; }
+
+    //std::cout << edited_line << std::endl;
+
+    bool SUCCESS_FLAG = FileEditor::changeLineRemoveCompetable(found_records_indexes[0], data_base_file_name, edited_line, "\n");
+    return SUCCESS_FLAG;
+
+    //return true;
+}
+
+
+
+
+
+
+

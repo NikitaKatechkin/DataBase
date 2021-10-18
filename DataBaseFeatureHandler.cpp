@@ -83,6 +83,22 @@ bool DataBaseFeatureHandler::independentGetVecOfFeatures(const std::string& obje
     return !(features_vector.empty());
 }
 
+bool DataBaseFeatureHandler::independentGetFeaturesList(std::vector<unsigned int>& features_indexes, const std::string& object,
+                                                        const std::string& feature_delimiter, std::vector<std::string>& features_list)
+{
+    std::string extracted_feature;
+    bool SUCCESS_EXTRACTION_FLAG = true;
+    for (auto iter = features_indexes.begin(); iter != features_indexes.end(); iter++)
+    {
+        SUCCESS_EXTRACTION_FLAG = independentGetFeature((*iter), object, feature_delimiter, extracted_feature);
+        if (!SUCCESS_EXTRACTION_FLAG) { return SUCCESS_EXTRACTION_FLAG; }
+
+        features_list.push_back(extracted_feature);
+    }
+
+    return SUCCESS_EXTRACTION_FLAG;
+}
+
 bool DataBaseFeatureHandler::mergeVecOfFeaturesToStr(std::vector<std::string>& features_vector,
                                                             const std::string& feature_delimiter, std::string& object)
 {
