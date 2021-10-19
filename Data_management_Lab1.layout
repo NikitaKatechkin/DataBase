@@ -2,49 +2,14 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="DataBase.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="DataBaseFeatureHandler.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="80" topLine="0" />
+			<Cursor1 position="1118" topLine="0" />
 		</Cursor>
-	</File>
-	<File name="FileHandler.cpp" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8352" topLine="18" />
-		</Cursor>
-		<Folding>
-			<Collapse line="0" />
-			<Collapse line="11" />
-			<Collapse line="28" />
-			<Collapse line="32" />
-			<Collapse line="41" />
-			<Collapse line="95" />
-			<Collapse line="111" />
-			<Collapse line="141" />
-			<Collapse line="171" />
-			<Collapse line="192" />
-			<Collapse line="213" />
-			<Collapse line="218" />
-		</Folding>
-	</File>
-	<File name="FileEditor.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="11204" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="3" />
-			<Collapse line="33" />
-			<Collapse line="44" />
-			<Collapse line="64" />
-			<Collapse line="130" />
-			<Collapse line="210" />
-			<Collapse line="263" />
-			<Collapse line="264" />
-			<Collapse line="338" />
-		</Folding>
 	</File>
 	<File name="DataBaseHandler.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="70086" topLine="117" />
+			<Cursor1 position="36691" topLine="69" />
 		</Cursor>
 		<Folding>
 			<Collapse line="2" />
@@ -81,62 +46,11 @@
 			<Collapse line="1120" />
 			<Collapse line="1135" />
 			<Collapse line="1212" />
+			<Collapse line="1260" />
+			<Collapse line="1261" />
 			<Collapse line="1279" />
+			<Collapse line="1290" />
 		</Folding>
-	</File>
-	<File name="DataBaseFeatureHandler.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4122" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="4" />
-			<Collapse line="17" />
-			<Collapse line="29" />
-			<Collapse line="50" />
-			<Collapse line="66" />
-			<Collapse line="87" />
-			<Collapse line="103" />
-			<Collapse line="118" />
-		</Folding>
-	</File>
-	<File name="testField.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1392" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="6" />
-			<Collapse line="33" />
-			<Collapse line="39" />
-		</Folding>
-	</File>
-	<File name="main.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="8277" topLine="82" />
-		</Cursor>
-		<Folding>
-			<Collapse line="33" />
-			<Collapse line="40" />
-			<Collapse line="69" />
-			<Collapse line="108" />
-			<Collapse line="113" />
-			<Collapse line="121" />
-			<Collapse line="125" />
-			<Collapse line="152" />
-			<Collapse line="158" />
-		</Folding>
-	</File>
-	<File name="DataBaseHandler.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="114" topLine="0" />
-		</Cursor>
-		<Folding>
-			<Collapse line="9" />
-		</Folding>
-	</File>
-	<File name="FileHandler.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="713" topLine="0" />
-		</Cursor>
 	</File>
 	<File name="testField.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -157,20 +71,37 @@
 			<Collapse line="182" />
 		</Folding>
 	</File>
-	<File name="DataBaseFeatureHandler.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="FileEditor.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1118" topLine="0" />
+			<Cursor1 position="11204" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="3" />
+			<Collapse line="33" />
+			<Collapse line="44" />
+			<Collapse line="64" />
+			<Collapse line="130" />
+			<Collapse line="210" />
+			<Collapse line="263" />
+			<Collapse line="264" />
+			<Collapse line="338" />
+		</Folding>
 	</File>
-	<File name="FileEditor.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="779" topLine="0" />
+			<Cursor1 position="8531" topLine="83" />
 		</Cursor>
-	</File>
-	<File name="tools.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="324" topLine="4" />
-		</Cursor>
+		<Folding>
+			<Collapse line="33" />
+			<Collapse line="40" />
+			<Collapse line="69" />
+			<Collapse line="108" />
+			<Collapse line="113" />
+			<Collapse line="121" />
+			<Collapse line="125" />
+			<Collapse line="152" />
+			<Collapse line="158" />
+		</Folding>
 	</File>
 	<File name="CustomIO.cpp" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
@@ -181,29 +112,6 @@
 			<Collapse line="11" />
 			<Collapse line="19" />
 			<Collapse line="31" />
-		</Folding>
-	</File>
-	<File name="DataBase.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="914" topLine="23" />
-		</Cursor>
-		<Folding>
-			<Collapse line="39" />
-			<Collapse line="63" />
-			<Collapse line="68" />
-		</Folding>
-	</File>
-	<File name="tools.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6925" topLine="30" />
-		</Cursor>
-		<Folding>
-			<Collapse line="32" />
-			<Collapse line="58" />
-			<Collapse line="103" />
-			<Collapse line="147" />
-			<Collapse line="193" />
-			<Collapse line="205" />
 		</Folding>
 	</File>
 	<File name="TestSuits.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -227,9 +135,104 @@
 			<Collapse line="492" />
 		</Folding>
 	</File>
+	<File name="FileEditor.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="779" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="TestSuits.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="578" topLine="0" />
 		</Cursor>
+	</File>
+	<File name="tools.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6925" topLine="30" />
+		</Cursor>
+		<Folding>
+			<Collapse line="32" />
+			<Collapse line="58" />
+			<Collapse line="103" />
+			<Collapse line="147" />
+			<Collapse line="193" />
+			<Collapse line="205" />
+		</Folding>
+	</File>
+	<File name="tools.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="324" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="testField.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1392" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="33" />
+			<Collapse line="39" />
+		</Folding>
+	</File>
+	<File name="DataBase.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="914" topLine="23" />
+		</Cursor>
+		<Folding>
+			<Collapse line="39" />
+			<Collapse line="63" />
+			<Collapse line="68" />
+		</Folding>
+	</File>
+	<File name="FileHandler.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="713" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="FileHandler.cpp" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8352" topLine="18" />
+		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+			<Collapse line="11" />
+			<Collapse line="28" />
+			<Collapse line="32" />
+			<Collapse line="41" />
+			<Collapse line="95" />
+			<Collapse line="111" />
+			<Collapse line="141" />
+			<Collapse line="171" />
+			<Collapse line="192" />
+			<Collapse line="213" />
+			<Collapse line="218" />
+		</Folding>
+	</File>
+	<File name="DataBaseHandler.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="114" topLine="81" />
+		</Cursor>
+		<Folding>
+			<Collapse line="9" />
+		</Folding>
+	</File>
+	<File name="DataBase.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="80" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="DataBaseFeatureHandler.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4122" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="4" />
+			<Collapse line="17" />
+			<Collapse line="29" />
+			<Collapse line="50" />
+			<Collapse line="66" />
+			<Collapse line="87" />
+			<Collapse line="103" />
+			<Collapse line="118" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

@@ -67,10 +67,10 @@
 	"FileEditor.h"
 	"FileHandler.h"
 
-1634584870 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
+1634642805 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
 	"DataBaseHandler.h"
 
-1634039798 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
+1634643125 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
 	<algorithm>
 	<sstream>
 	"DataBaseFeatureHandler.h"

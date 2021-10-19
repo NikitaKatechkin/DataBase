@@ -2,5 +2,5 @@ Database.txt
 first;second;third;
 1;0;0;
 l;1;g;
-k;1;z;
+k;0;z;
 m;1;z;
