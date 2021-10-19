@@ -26,7 +26,7 @@
 1631823621 c:\projects\cpp\hse\data_management_lab1\database.h
 	"tools.h"
 
-1632343732 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
+1634644772 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
 	"FileHandler.h"
 
 1631987356 c:\projects\cpp\hse\data_management_lab1\filehandler.h
@@ -67,10 +67,10 @@
 	"FileEditor.h"
 	"FileHandler.h"
 
-1634642805 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
+1634644650 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
 	"DataBaseHandler.h"
 
-1634643125 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
+1634644691 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
 	<algorithm>
 	<sstream>
 	"DataBaseFeatureHandler.h"

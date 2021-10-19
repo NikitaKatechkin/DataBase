@@ -1,5 +1,7 @@
 #include "DataBaseHandler.h"
 
+///START DATABASE HANDLER PART
+//SERVICE FUNCTIONALITY PART OF DATABASE HANDLER
 bool DataBaseHandler::getFeaturesFromRecord(std::string& data_base_file_name, unsigned int line_number, std::vector<std::string>& features_list)
 {
     if(!DataBaseHandler::isStringDataBaseFileName(data_base_file_name, ".txt"))
@@ -40,7 +42,23 @@ bool DataBaseHandler::comparePairOfFeaturesList(std::vector<std::string>& first_
 
     return EQUAL_COMPARED_FEATURES_FLAG;
 }
-//HERE
+
+bool DataBaseHandler::getMaskedFeatureList(std::vector<std::string>& features_list, std::vector<std::string>& mask, const std::string& key_sign, std::vector<unsigned int>& masked_features_indexes_list)
+{
+    bool EQUAL_SIZE_FLAG = (features_list.size() == mask.size());
+    if (!EQUAL_SIZE_FLAG) { return EQUAL_SIZE_FLAG; }
+
+    bool MASKED_FEATURE_FLAG;
+    for (unsigned int feature_index = 0; feature_index < features_list.size(); feature_index++)
+    {
+        MASKED_FEATURE_FLAG = (mask[feature_index] == key_sign);
+        if (MASKED_FEATURE_FLAG) {  masked_features_indexes_list.push_back(feature_index); }
+    }
+
+    return true;
+}
+
+//MAIN FUNCTIONALITY PART OF DATABASE HANDLER
 bool DataBaseHandler::searchRecordsDataBase(std::string& data_base_file_name, std::vector<unsigned int>& found_records_indexes)
 {
     std::ifstream tmp_data_base_stream;
@@ -80,21 +98,6 @@ bool DataBaseHandler::searchRecordsDataBase(std::string& data_base_file_name, st
     return true;
 }
 
-bool DataBaseHandler::getMaskedFeatureList(std::vector<std::string>& features_list, std::vector<std::string>& mask, const std::string& key_sign, std::vector<unsigned int>& masked_features_indexes_list)
-{
-    bool EQUAL_SIZE_FLAG = (features_list.size() == mask.size());
-    if (!EQUAL_SIZE_FLAG) { return EQUAL_SIZE_FLAG; }
-
-    bool MASKED_FEATURE_FLAG;
-    for (unsigned int feature_index = 0; feature_index < features_list.size(); feature_index++)
-    {
-        MASKED_FEATURE_FLAG = (mask[feature_index] == key_sign);
-        if (MASKED_FEATURE_FLAG) {  masked_features_indexes_list.push_back(feature_index); }
-    }
-
-    return true;
-}
-//HERE
 bool DataBaseHandler::addRecordsDataBase(std::string& data_base_file_name)
 {
     //Checking of file existanse
@@ -171,7 +174,7 @@ bool DataBaseHandler::addRecordsDataBase(std::string& data_base_file_name)
 
     return SUCCESS_ADDING_RECORD_FLAG;
 }
-//HERE
+
 bool DataBaseHandler::deleteRecordsDataBase(std::string& data_base_file_name)
 {
     std::ifstream tmp_data_base_stream;
@@ -219,7 +222,7 @@ bool DataBaseHandler::deleteRecordsDataBase(std::string& data_base_file_name)
 
     return SUCCESS_DELETING_FLAG;
 }
-//HERE
+
 bool DataBaseHandler::editRecordsDataBase(std::string& data_base_file_name)
 {
     /*std::ifstream tmp_data_base_stream;
@@ -370,9 +373,12 @@ bool DataBaseHandler::editRecordsDataBase(std::string& data_base_file_name)
 
     //return true;
 }
+///END DATABASE HANDLER PART
 
 //LEGACY PART
 
+///START FILE HANDLER API WRAPPER PART
+//SERVICE FUNCTIONS FOR FILE HANDLER API PART WRAPPER
 bool DataBaseHandler::isStringDataBaseFileName(const std::string& file_name, const std::string& extension)
 {
     if (extension.size() >= file_name.size()) { return false; }
@@ -385,6 +391,7 @@ bool DataBaseHandler::isStringDataBaseFileName(const std::string& file_name, con
     return true;
 }
 
+//FILE HANDLER API PART WRAPPER
 bool DataBaseHandler::openingReadDataBaseFileNameAcknowledge(std::ifstream& data_base_read_file_stream, std::string& result_database_file_name)
 {
     if(!DataBaseHandler::isStringDataBaseFileName(result_database_file_name, ".txt"))
@@ -418,6 +425,7 @@ bool DataBaseHandler::openWriteFileDataBaseFileNameAcknowledge(std::ofstream& da
     return FileHandler::openWriteFile(result_database_file_name, data_base_write_file_stream);
 }
 
+//SERVICE FUNCTIONS FOR CREAT_DATA_BASE FUNCTION
 bool DataBaseHandler::addFieldToDataBase(const std::string& data_base_file_name)
 {
     //TRYONG TO ADD FIELD NAME IN SERVICE NAMES LINE
@@ -466,6 +474,7 @@ bool DataBaseHandler::addFieldToDataBase(const std::string& data_base_file_name)
     return KEY_ADDING_FLAG;
 }
 
+//CREAT_DATA_BASE PART
 bool DataBaseHandler::createDataBase(std::string& data_base_file_name)
 {
     if(!isStringDataBaseFileName(data_base_file_name, ".txt"))
@@ -508,6 +517,7 @@ bool DataBaseHandler::createDataBase(std::string& data_base_file_name)
     return KEY_FIELD_EXISTANCE_FLAG;
 }
 
+//DELETING/CLEARING DATA BASE PART
 bool DataBaseHandler::deletingDataBase(std::string& data_base_file_name)
 {
     if(!DataBaseHandler::isStringDataBaseFileName(data_base_file_name, ".txt"))
@@ -568,6 +578,7 @@ bool DataBaseHandler::clearDataBase(std::string& data_base_file_name)
     return SUCCESS_SERVICE_LINE_ADDING_FLAG;
 }
 
+//SAVE FUNCTIONS PART
 bool DataBaseHandler::saveDataBase(std::ifstream& data_base_file_read_stream)
 {
     return FileHandler::saveFile(data_base_file_read_stream);
@@ -577,7 +588,10 @@ bool DataBaseHandler::saveDataBase(const std::string& data_base_file_path, std::
 {
     return FileHandler::saveFile(data_base_file_path, data_base_file_write_stream);
 }
+///END FILE HANDLER API WRAPPER PART
 
+///START LEGACY PART
+//INDEPENDENT PART OF SERVICE FUNCTIONS FOR ALL VERSIONS OF SEARCH FUNCTIONALITY
 bool DataBaseHandler::retrievingRecordsFromLine(std::vector<std::string>& record_list, std::string& data_base_file_name, unsigned int line_number)
 {
     std::string line;
@@ -662,6 +676,8 @@ void DataBaseHandler::searchingForFeaturesValues(std::vector<int>& founded_recor
     }
 }
 
+//DEPENDENT PART OF SERVICE FUNCTIONS FOR ALL VERSIONS OF SEARCH FUNCTIONALITY
+//FUNCTIONS DEPEND ON RETRIEVING_RECORDS_FROM_LINE FUNCTION
 bool DataBaseHandler::dividingKeyNonkeyFeatures(std::vector<std::string>& key_features_list, std::vector<std::string>& non_key_features_list,
                                                                       std::string& data_base_file_name)
 {
@@ -688,8 +704,7 @@ bool DataBaseHandler::dividingKeyNonkeyFeatures(std::vector<std::string>& key_fe
     return true;
 }
 
-
-//HERE
+//MAIN FUNCTIONALITY OF LEGACY PART
 bool DataBaseHandler::addObjectDataBaseV2Acknowledge(std::vector<int>& founded_record_index_list, std::ifstream& database_read_stream, std::string& data_base_file_name,
                                             std::vector<std::string>& key_features_list, std::vector<std::string>& non_key_features_list,
                                             std::vector<std::string>& search_features_values_list, std::vector<unsigned int>& search_features_order_indexes_list,
@@ -757,7 +772,7 @@ bool DataBaseHandler::addObjectDataBaseV2Acknowledge(std::vector<int>& founded_r
 
     return SUCCESS_ADDING_RECORD_FLAG;
 }
-//HERE
+
 bool DataBaseHandler::deleteObjectDataBaseV2Acknowledge(std::vector<int>& founded_record_index_list, std::ifstream& database_read_stream, std::string& data_base_file_name,
                                             std::vector<std::string>& key_features_list, std::vector<std::string>& non_key_features_list,
                                             std::vector<std::string>& search_features_values_list, std::vector<unsigned int>& search_features_order_indexes_list,
@@ -835,9 +850,4 @@ bool DataBaseHandler::searchObjectsDataBaseV2Acknowledge(std::vector<int>& found
 
     return SUCCESS_CREATING_SEARCH_FEATURE_ORDER_VECTOR_FLAG;
 }
-
-
-
-
-
-
+///END LEGACY PART
