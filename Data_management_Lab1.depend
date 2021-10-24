@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1634582683 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
+1635116049 source:c:\projects\cpp\hse\data_management_lab1\main.cpp
 	"DataBase.h"
 	"TestSuits.h"
 	"testField.h"
@@ -26,7 +26,7 @@
 1631823621 c:\projects\cpp\hse\data_management_lab1\database.h
 	"tools.h"
 
-1634644772 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
+1634646823 source:c:\projects\cpp\hse\data_management_lab1\filehandler.cpp
 	"FileHandler.h"
 
 1631987356 c:\projects\cpp\hse\data_management_lab1\filehandler.h
@@ -67,10 +67,10 @@
 	"FileEditor.h"
 	"FileHandler.h"
 
-1634644650 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
+1635116929 source:c:\projects\cpp\hse\data_management_lab1\databasehandler.cpp
 	"DataBaseHandler.h"
 
-1634644691 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
+1634646823 c:\projects\cpp\hse\data_management_lab1\databasehandler.h
 	<algorithm>
 	<sstream>
 	"DataBaseFeatureHandler.h"

@@ -490,10 +490,18 @@ bool DataBaseHandler::createDataBase(std::string& data_base_file_name)
     if (!WRITING_NAME_FILE_FLAG) { return WRITING_NAME_FILE_FLAG; }
 
     bool WRITING_FIELD_WITH_KEY_SIGN;
-    for (int i = 0; i < 3; i++)
+    /*for (int i = 0; i < 3; i++)
     {
         WRITING_FIELD_WITH_KEY_SIGN = DataBaseHandler::addFieldToDataBase(data_base_file_name);
-        if (!WRITING_FIELD_WITH_KEY_SIGN) { /*return WRITING_FIELD_WITH_KEY_SIGN;*/ break; }
+        if (!WRITING_FIELD_WITH_KEY_SIGN) { return WRITING_FIELD_WITH_KEY_SIGN; break; }
+    }*/
+    bool stop_add_fields = false;
+    while (!stop_add_fields)
+    {
+        WRITING_FIELD_WITH_KEY_SIGN = DataBaseHandler::addFieldToDataBase(data_base_file_name);
+        if (!WRITING_FIELD_WITH_KEY_SIGN) { /*return WRITING_FIELD_WITH_KEY_SIGN;*/ stop_add_fields = true; break; }
+
+        stop_add_fields = !CustomIO::safeInputBool("Do you want to add another field (1 - yes, 0 - no)");
     }
 
     std::string key_signs_service_line;

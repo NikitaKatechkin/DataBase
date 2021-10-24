@@ -15,6 +15,72 @@
 
 int main()
 {
+    std::string answer;
+    std::string database_name;
+
+    bool is_over = false;
+    while (!is_over)
+    {
+        answer = CustomIO::safeInputString("Input a command number: ");
+        if (answer == "1")
+        {
+            DataBaseHandler::createDataBase(database_name);
+        }
+        else if (answer == "2")
+        {
+            DataBaseHandler::deletingDataBase(database_name);
+        }
+        else if (answer == "3")
+        {
+            DataBaseHandler::clearDataBase(database_name);
+        }
+        else if (answer == "4")
+        {
+            DataBaseHandler::deleteRecordsDataBase(database_name);
+        }
+        else if (answer == "5")
+        {
+            DataBaseHandler::addRecordsDataBase(database_name);
+        }
+        else if (answer == "6")
+        {
+            std::vector<unsigned int> found_records_indexes;
+            DataBaseHandler::searchRecordsDataBase(database_name, found_records_indexes);
+            std::vector<std::string> founded_records;
+            for (auto iter = found_records_indexes.begin(); iter < found_records_indexes.end(); iter++)
+            {
+                std::string line;
+                bool ALARM_FLAG  = FileEditor::copyLineV2(*iter, database_name, line);
+                if (!ALARM_FLAG) {std::cout << "BAD EXCEPTION INVALID NOT PROCESSED OUTPUT" << std::endl; break;}
+                founded_records.push_back(line);
+            }
+
+            std::cout << "FOUNDED RECORDS:" << std::endl;
+            for (auto iter = founded_records.begin(); iter < founded_records.end(); iter++)
+            {
+                std::cout << (*iter) << std::endl;
+            }
+        }
+        else if (answer == "7")
+        {
+            DataBaseHandler::editRecordsDataBase(database_name);
+        }
+        else if (answer == "8")
+        {
+            is_over = true;
+        }
+        else
+        {
+            std::cout << "My appologize" << std::endl;
+        }
+        database_name = "";
+    }
+
+    return 0;
+}
+
+/*int main()
+{*/
     //tests::test_createFile();
     //tests::test_closeWriteFile();
     //tests::test_deleteFile();
@@ -201,8 +267,8 @@ int main()
     bool status = DataBaseHandler::deleteRecordsDataBase(data_base_file_name);
     std::cout << status << std::endl;*/
 
-    std::string file_name;
-    DataBaseHandler::editRecordsDataBase(file_name);
+    /*std::string file_name;
+    DataBaseHandler::editRecordsDataBase(file_name);*/
 
-    return 0;
-}
+    /*return 0;
+}*/
