@@ -9,6 +9,7 @@
 namespace FileHandler
 {
     const char END_OF_TEXT_ASCII_SYMBOL = '\3';
+    const bool debug_flag = false;
 
     bool createFile(const std::string& file_name);
     bool deleteFile(const std::string& file_name);

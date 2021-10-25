@@ -67,6 +67,10 @@ int main()
         }
         else if (answer == "8")
         {
+            DataBaseHandler::showDataBase(database_name);
+        }
+        else if (answer == "9")
+        {
             is_over = true;
         }
         else

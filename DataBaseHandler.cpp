@@ -373,6 +373,49 @@ bool DataBaseHandler::editRecordsDataBase(std::string& data_base_file_name)
 
     //return true;
 }
+
+bool DataBaseHandler::showDataBase(std::string& data_base_file_name)
+{
+    std::ifstream tmp_data_base_stream;
+    bool OPENING_FILE_FLAG = DataBaseHandler::openingReadDataBaseFileNameAcknowledge(tmp_data_base_stream, data_base_file_name);
+    if (!OPENING_FILE_FLAG) { return OPENING_FILE_FLAG; }
+
+    std::vector<std::string> features_values_list;
+    std::string record;
+    unsigned int line_number = DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE;
+    while (FileEditor::goToLine(line_number, tmp_data_base_stream))
+    {
+        if (line_number == DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE)
+        {
+            std::cout << "|||||||||FIELDS NAMES|||||||" << std::endl;
+        }
+
+        if (line_number == DataBaseHandler::ServiceLines::DATABASE_KEY_SIGNS_LINE) { line_number++; continue; }
+
+        bool SUCCESS_RECORD_COPY_FLAG = FileEditor::copyLineV2(line_number, data_base_file_name, record);
+        if (!SUCCESS_RECORD_COPY_FLAG) { return SUCCESS_RECORD_COPY_FLAG; }
+
+        bool FEATURES_EXTRACTION_FLAG = DataBaseFeatureHandler::independentGetVecOfFeatures(record, ";", features_values_list);
+        if (!FEATURES_EXTRACTION_FLAG) { return FEATURES_EXTRACTION_FLAG; }
+
+        for (auto iter = features_values_list.begin(); iter != features_values_list.end(); iter++)
+        {
+            std::cout << (*iter) << "---------";
+        }
+        std::cout << std::endl;
+        features_values_list.clear();
+
+        if (line_number == DataBaseHandler::ServiceLines::DATABASE_FIELDS_LINE)
+        {
+            std::cout << "||||||||||||||||||||||||||||||||||||" << std::endl;
+            std::cout << "||||||||||||||||||||||||||||||||||||" << std::endl;
+        }
+
+        line_number++;
+    }
+
+    return true;
+}
 ///END DATABASE HANDLER PART
 
 //LEGACY PART

@@ -11,6 +11,10 @@
 
 namespace FileEditor
 {
+    const bool debug_flag = false;
+
+    //void toggleDebugMode();
+
     bool goToLine(unsigned int l_line_number, std::ifstream& l_file);
     bool copyLine(unsigned int l_line_number, std::ifstream& l_file, std::string& l_line);
     bool copyLineV2(unsigned int l_line_number, std::string l_file_path, std::string& l_line);

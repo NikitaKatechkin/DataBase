@@ -58,6 +58,8 @@ namespace DataBaseHandler
     bool deleteRecordsDataBase(std::string& data_base_file_name);
 
     bool editRecordsDataBase(std::string& data_base_file_name);
+
+    bool showDataBase(std::string& data_base_file_name);
     ///END DATABASE HANDLER PART
 
     ///START LEGACY PART
